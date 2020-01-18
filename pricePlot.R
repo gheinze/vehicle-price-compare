@@ -65,16 +65,17 @@ autotrader_url_to_df <- function(url, model) {
   
 }
 
+minYear <- "2016"
 
 
-kia_soul_url <- 'https://www.autotrader.ca/cars/kia/on/?rcp=50&rcs=0&srt=4&yRng=2016%2C&pRng=8000%2C35000&prx=-2&prv=Ontario&loc=n2t0a2&hprc=False&wcp=False&eng=Electric%20Motor&inMarket=advancedSearch'
+kia_soul_url <- paste("https://www.autotrader.ca/cars/kia/on/?rcp=50&rcs=0&srt=4&yRng=", minYear, "%2C&pRng=8000%2C35000&prx=-2&prv=Ontario&loc=n2t0a2&fuel=Electric&hprc=False&wcp=False&inMarket=advancedSearch", sep="")
 df_soul <- autotrader_url_to_df(kia_soul_url, "Kia Soul EV")
 
 
-nissan_leaf_url <- 'https://www.autotrader.ca/cars/nissan/on/?rcp=50&rcs=0&srt=4&yRng=2016%2C&pRng=8000%2C35000&prx=-2&prv=Ontario&loc=n2t0a2&hprc=False&wcp=False&eng=Electric%20Motor&inMarket=advancedSearch'
+nissan_leaf_url <- paste("https://www.autotrader.ca/cars/nissan/on/?rcp=15&rcs=0&srt=4&yRng=", minYear, "%2C&pRng=8000%2C35000&prx=-2&prv=Ontario&loc=n2t0a2&fuel=Electric&hprc=False&wcp=False&inMarket=advancedSearch&scrladid=65716526", sep="")
 df_leaf <- autotrader_url_to_df(nissan_leaf_url, "Nissan Leaf")
 
-chevy_bolt_url <- 'https://www.autotrader.ca/cars/chevrolet/on/?rcp=50&rcs=0&srt=4&yRng=2016%2C&pRng=8000%2C35000&prx=-2&prv=Ontario&loc=n2t0a2&hprc=False&wcp=False&eng=Electric%20Motor&inMarket=advancedSearch'
+chevy_bolt_url <- paste("https://www.autotrader.ca/cars/chevrolet/bolt%20ev/on/?rcp=50&rcs=0&srt=4&yRng=", minYear, "%2C&pRng=8000%2C35000&prx=-2&prv=Ontario&loc=n2t0a2&fuel=Electric&hprc=False&wcp=False&inMarket=advancedSearch", sep="")
 df_bolt <- autotrader_url_to_df(chevy_bolt_url, "Chevy Bolt")
 
 df <- rbind(df_soul, df_leaf, df_bolt)
@@ -91,11 +92,10 @@ g <- ggplot(df,
   labs(color="Model", shape="Year") +
   geom_point() +
   scale_y_continuous(name="Price", labels = scales::comma) +
-  scale_x_continuous(name="Km", labels = scales::comma) +
-  geom_smooth(aes(linetype=model), method="lm", colour="gray", fullrange=T, size=0.5) 
+  scale_x_continuous(name="Km", labels = scales::comma) 
+  #geom_smooth(aes(linetype=model), method="lm", colour="gray", fullrange=T, size=0.5) 
 
 
 ggplotly(g)
-
 
 
